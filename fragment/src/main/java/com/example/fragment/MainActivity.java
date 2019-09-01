@@ -1,21 +1,23 @@
 package com.example.fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.bottomappbar.BottomAppBar;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.fragment.Gps_btn3.MapsActivity;
 import com.example.fragment.Naver_NAVI_btn4.MyFragment3;
 import com.example.fragment.language_btn2.lang_fragment;
-import com.example.fragment.language_btn2.webViewActivity;
+import com.example.fragment.main_View_btn1.webViewActivity;
 import com.example.fragment.main_View_btn1.MainFragment;
 import com.example.fragment.parse_Tour.Tour_informActivity;
 import com.example.fragment.parse_course.CourseInfoActivity;
 import com.example.fragment.parse_hotel.HotelInfoActivity;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.net.URL;
 
@@ -27,34 +29,34 @@ public class MainActivity extends AppCompatActivity implements onwebListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomBar bottomBar =(BottomBar)findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottomBar);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,new MainFragment()).commit();//첫화면설정
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onTabSelected(int tabId) {
-
-                switch(tabId){
-                    case R.id.tab_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,new MainFragment()).commit();
+            public boolean onNavigationItemSelected(@NonNull MenuItem Item) {
+                switch(Item.getItemId()){
+                    case R.id.bottom_home:{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,new MainFragment()).commit();
                         break;
-
-                    case R.id.tab_language:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,new lang_fragment()).commit();
+                    }
+                    case R.id.bottom_tran:{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,new lang_fragment()).commit();
                         break;
-
-                    case R.id.tab_tour:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,new mainViewPagerfragment()).commit();
-                         break;
-
-                    case R.id.tab_GPS:
-                          Intent intent = new Intent(MainActivity.this,MapsActivity.class);
-                          startActivity(intent);
-                          break;
+                    }
+                    case R.id.bottom_tour:{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,new mainViewPagerfragment()).commit();
+                        break;
+                    }
+                    case R.id.bottom_gps:{
+                        Intent intent = new Intent(MainActivity.this,MapsActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
                 }
+                return true;
             }
         });
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,new MainFragment()).commit();
-
-
     }
 
 
@@ -85,10 +87,6 @@ public class MainActivity extends AppCompatActivity implements onwebListener{
         intent.putExtra("contenttypeid",contenttypeid);
         startActivity(intent);
     }
-//   public void sendwebView(String Url){
-//        Intent intent = new Intent(this,webViewActivity.class);
-//        intent.putExtra("URL",Url);
-//        startActivity(intent);
-//    }
+
 
 }

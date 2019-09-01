@@ -1,4 +1,4 @@
-package com.example.fragment.language_btn2;
+package com.example.fragment.main_View_btn1;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +27,7 @@ public class webViewActivity extends AppCompatActivity {
         mwebView.setWebViewClient(new WebViewClientClass());
 
 
+
     }
         private class WebViewClientClass extends WebViewClient {//페이지 이동
             @Override
@@ -36,6 +37,18 @@ public class webViewActivity extends AppCompatActivity {
                 return true;
             }
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                mwebView.loadUrl("javascript:(function() { " +
+                        "document.getElementById('seoul-common-gnb').style.display='none';" + //상단 메뉴바
+                        "document.getElementsByClassName('wrapper-inner')[0].style.display='none'; " + //VISITSEOULNET 배너
+                        "document.getElementsByClassName('sub-detail-visual-wrap default')[0].style.display='none';"+ // 배너사진
+                        "document.getElementsByClassName('livere-wrap')[0].style.display='none';"+    //안내 삭제
+                        "document.getElementsByTagName('footer')[0].style.display='none';"+             //footer삭제
+                        "document.getElementsByClassName('service-menu-wrap')[0].style.display='none';"+ //최하단 서비스메뉴삭제
+                        "document.getElementsByClassName('right-content')[0].style.display='none';"+ //상세정보 (제작일/수정일 숨기기)
+                        "})()");
+            }
         }
 
     @Override
@@ -46,4 +59,7 @@ public class webViewActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+
 }

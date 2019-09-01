@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import com.example.fragment.R;
@@ -85,7 +87,8 @@ public class CourseInfoActivity extends AppCompatActivity {
 
                             if(startTag.equals("subdetailoverview")){
                                 xpp.next();
-                                course.setOverview(xpp.getText());
+                                Spanned spanned = Html.fromHtml(xpp.getText());
+                                course.setOverview(spanned.toString());
                                 Log.d("jmw93",xpp.getText());
                                 break;
                             }
@@ -113,6 +116,10 @@ public class CourseInfoActivity extends AppCompatActivity {
                                         conn.connect();
                                         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
                                         Bitmap bitmap = BitmapFactory.decodeStream(bis);
+//                                        OOM 오류 발생시 아래코드 활성화
+//                                        BitmapFactory.Options options =new BitmapFactory.Options();
+//                                        options.inSampleSize=2;
+//                                        Bitmap bitmap = BitmapFactory.decodeStream(bis,null,options);
                                         bis.close();
                                         course.setImg(bitmap);
                                         Log.d("sae1013", "course이미지 로딩");

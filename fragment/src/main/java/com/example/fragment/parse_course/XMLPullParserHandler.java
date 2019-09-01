@@ -79,7 +79,9 @@ public class XMLPullParserHandler {
                                     URLConnection conn = imgurl.openConnection();
                                     conn.connect();
                                     BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                                    Bitmap bitmap = BitmapFactory.decodeStream(bis);
+                                    BitmapFactory.Options options = new BitmapFactory.Options();
+                                    options.inSampleSize=2;
+                                    Bitmap bitmap = BitmapFactory.decodeStream(bis,null,options);
                                     bis.close();
                                     course.setImage(bitmap);
                                     Log.d("sae1013", "course이미지 로딩");

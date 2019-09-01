@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -41,7 +42,7 @@
             android:name=".Gps_btn3.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".language_btn2.webViewActivity"
+            android:name=".main_View_btn1.webViewActivity"
             android:label="web" />
         <activity android:name=".parse_Tour.Tour_informActivity" />
 

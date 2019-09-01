@@ -128,20 +128,6 @@ public class hotel_fragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                    parsing();
-//                    Log.d("hoteltest","리스트:"+hotellist);
-//
-//                activity.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        adapter.setItems(hotellist);
-//                    }
-//                });
-//            }
-//        }).start();
     return view;
     }
     public void parsing() {
@@ -196,12 +182,24 @@ public class hotel_fragment extends Fragment {
                             xpp.next();
                             try {
                                 imgurl = new URL(xpp.getText());
+                                Log.d("hotelimage","주소"+imgurl);
                                 URLConnection conn = imgurl.openConnection();
                                 conn.connect();
                                 BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                                Bitmap bitmap = BitmapFactory.decodeStream(bis);
+                                Bitmap bitmap = BitmapFactory.decodeStream(bis); //비트맵변환
                                 bis.close();
-                                hotel.setImage(bitmap);
+                                int width=bitmap.getWidth();
+                                int height=bitmap.getHeight();
+                                Log.d("bitmap","가로세로:"+width+height);
+                                if(width>400 || height>400){
+                                    width= 355;
+                                    height=230;
+                                    bitmap=Bitmap.createScaledBitmap(bitmap,width,height,true);
+                                    int new_width=bitmap.getWidth();
+                                    int new_height=bitmap.getHeight();
+                                    Log.d("bitmap","새로운 가로세로"+new_width+new_height);
+                                }
+                             hotel.setImage(bitmap);
 
                             }catch (Exception e){
                                 Log.d("jmw93","이미지로딩실패");
@@ -249,6 +247,7 @@ public class hotel_fragment extends Fragment {
         super.onPause();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         Log.d("민우","onPause()");
+
     }
 
     @Override

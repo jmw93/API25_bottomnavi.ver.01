@@ -75,8 +75,10 @@ public class XMLPullParserHandler {
                                imgurl = new URL(xpp.getText());
                                URLConnection conn = imgurl.openConnection();
                                conn.connect();
+                               BitmapFactory.Options options = new BitmapFactory.Options();
+                               options.inSampleSize=2;
                                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                               Bitmap bitmap = BitmapFactory.decodeStream(bis);
+                               Bitmap bitmap = BitmapFactory.decodeStream(bis,null,options);
                                bis.close();
                                tour.setBitmap(bitmap);
                                Log.d("jmw93","이미지전환 끝");
